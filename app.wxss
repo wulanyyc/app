@@ -5,6 +5,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
+
+.section {
+  width: 90%;
+  /* margin-left: 10%; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  margin-top: 20rpx;
+  padding: 20rpx 0;
+  border-radius: 15rpx;
+}
+
+.section-title {
+  padding: 0 10rpx;
+}
+
+.submit {
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 5%;
+}
+
+.red-text {
+  color:red;
+  padding: 0 8rpx;
+}

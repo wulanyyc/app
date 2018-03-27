@@ -2,16 +2,40 @@
 App({
   onLaunch: function () {
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    // var logs = wx.getStorageSync('logs') || []
+    // logs.unshift(Date.now())
+    // wx.setStorageSync('logs', logs)
+    var app = this;
 
     // 登录
     wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+        success: res => {
+          // console.log(res);
+          var code = res.code;
+          if (code) {
+            wx.request({
+              url: this.globalData.serverHost + '/open/session',
+              data: {
+                'code': code
+              },
+              method: 'GET',
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                app.globalData.userData = res.data.data;
+                if (!app.globalData.userData.uid) {
+                  wx.redirectTo({
+                    url: '/pages/open/open',
+                  });
+                }
+              }
+            });
+          }
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        }
+      }),
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -34,6 +58,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    serverHost: 'https://guoguojia.vip',
+    userData: {}
   }
 })

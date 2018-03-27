@@ -1,0 +1,27 @@
+<!--open.wxml-->
+<view class="open-form">
+  <form bindsubmit="formSubmit">
+    <view class="section">
+      <view class="section-title">店铺名称:</view>
+      <input name="name" placeholder="限45个字" maxlength="45" focus="true" cursor="1" />
+    </view>
+
+    <view class="section">
+      <view class="section-title">店铺介绍:</view>
+      <textarea class="desc" name="desc" placeholder="限100个字" maxlength="100" cursor="2" />
+    </view>
+
+    <view class="section">
+      <view class="section-title">联系方式:</view>
+      <block wx:if="{{phone}}"><input name="phone" disabled="true" maxlength="11" class="phone" value="{{phone}}" /></block>
+      <block wx:else>
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" size="mini" type="warn">获取微信绑定的手机号</button>
+      </block>
+    </view>
+
+    <view class="btn-area">
+      <button class="submit" formType="submit" type="primary" size="mini">提交审核</button>
+    </view>
+  </form>
+</view>
+

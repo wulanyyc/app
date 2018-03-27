@@ -1,4 +1,8 @@
 /**index.wxss**/
+.container {
+  padding: 200rpx 0;
+} 
+
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -17,5 +21,25 @@
 }
 
 .usermotto {
-  margin-top: 200px;
+  margin-top: 150px;
+  letter-spacing: 1px;
+}
+
+/** wxss **/
+/** 修改button默认的点击态样式类**/
+.button-hover {
+  background-color: red;
+}
+/** 添加自定义button点击态样式类**/
+.other-button-hover {
+  background-color: blue;
+}
+
+.add {
+  width: 98%;
+}
+
+.user-set {
+  margin-top: 20px;
+  width: 200px;
 }

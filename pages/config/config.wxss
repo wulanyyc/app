@@ -1,0 +1,17 @@
+/* config.wxss */
+page {
+  background-color: #f5f5f5;
+}
+
+.section {
+  justify-content: space-between;
+}
+
+.section .label{
+  padding-left: 25rpx;
+}
+
+.section .arrow{
+  padding-right: 25rpx;
+  color: #aaa;
+}

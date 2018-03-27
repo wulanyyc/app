@@ -1,12 +1,44 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/product/order",
+    "pages/product/add",
+    "pages/report/report",
+    "pages/config/config",
+    "pages/open/open",
+    "pages/shop/shop",
+    "pages/shop/edit"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
-  }
+    "navigationBarTitleText": "51开店",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "店铺"
+      },
+      {
+        "pagePath": "pages/product/order",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/product/add",
+        "text": "发布商品"
+      },
+      {
+        "pagePath": "pages/report/report",
+        "text": "报表"
+      },
+      {
+        "pagePath": "pages/config/config",
+        "text": "设置"
+      }
+    ]
+  },
+  "debug": false
 }

@@ -1,0 +1,12 @@
+<!--product.wxml-->
+<view class="container">
+  <view class="section">
+    <icon type="search" size="16" class="icon" color="green"/>
+    <input placeholder="搜产品名称"  bindconfirm="search" class="search" />
+    <button bindtap='addProduct' class="user-set" type="primary" size="mini">添加商品</button>
+  </view>
+
+  <scroll-view scroll-y style="height: 800rpx;background-color:red;" bindscrolltolower="lower">
+
+  </scroll-view>
+</view>

@@ -1,0 +1,21 @@
+<!--config.wxml-->
+<view class="container">
+  <view class="section">
+      <text class="label">店铺</text>
+      <text class="arrow">></text>
+  </view>
+  <view class="section">
+      <text class="label">钱包</text>
+      <text class="arrow">></text>
+  </view>
+
+  <view class="section">
+      <text class="label">更新版本</text>
+      <text class="arrow">></text>
+  </view>
+
+  <view class="section">
+      <text class="label">联系我们</text>
+      <text class="arrow">></text>
+  </view>
+</view>
