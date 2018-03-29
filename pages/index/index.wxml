@@ -1,10 +1,69 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>  
+    <image class="userinfo-avatar" src="{{userInfo.logo}}" mode="widthFix"></image>
+    <view style="width: 50%;">
+      <view><text>{{userInfo.name}}</text></view>
+      <view style="font-size:28rpx;line-height:48rpx;">钱包：<text style="color:red">{{userInfo.money}}</text></view>
+    </view>
+    <view style="width:28%;margin-right:2%;">
+      <!-- <button size="mini">店铺设置</button> -->
+      <button size="mini" type="primary">分享店铺</button>
+    </view>
+  </view>
+
+  <block wx:if="{{userInfo.productNum == 0}}">
+    <view style="margin-top:250rpx;width:100%;display:flex;justify-content:center;flex-direction:column;">
+      <view style="color:#ccc;text-align:center;">你还没有创建商品</view>
+      <button bindtap='addProduct' style="margin-top:30rpx">立即创建</button>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="filter">
+      <block wx:if="{{saleStatus}}">
+        <view class="filter-text filter-text-1 filter-active" bindtap="clickSale">销售中</view>
+      </block>
+      <block wx:else>
+          <view class="filter-text filter-text-1" bindtap="clickSale">销售中</view>
+      </block>
+
+      <block wx:if="{{auditStatus}}">
+        <view class="filter-text filter-text-2 filter-active" bindtap="clickAudit">审核中
+      </view>
+      </block>
+      <block wx:else>
+        <view class="filter-text filter-text-2" bindtap="clickAudit">审核中
+      </view>
+      </block>
+
+      <block wx:if="{{unsaleStatus}}">
+        <view class="filter-text filter-text-3 filter-active" bindtap="clickUnsale">已下线</view>
+      </block>
+      <block wx:else>
+        <view class="filter-text filter-text-3" bindtap="clickUnsale">已下线</view>
+      </block>
+    </view>
+
+    <view class="section">
+      <icon type="search" size="16" class="icon" color="green" style="width:5%;"/>
+      <input placeholder="搜产品名称"  bindconfirm="search" class="search" style="width:65%;"/>
+      <button size="mini" style="margin-left: 10rpx;" bindtap="addProduct" style="width:28%;margin-right: 2%;">创建商品</button>
+    </view>
+
+    <view wx:for="{{showProduct}}" wx:key="*this" class="product">
+      <image src="{{item.main_img}}" mode="widthFix" class="product-img" lazy-load="true" />
+      <view class="product-content">
+        <view>{{item.name}}</view>
+        <view>
+          售价：<text class="price">{{item.price}}</text>
+          佣金：<text class="price">{{item.salary}}</text>
+        </view>
+      </view>
+      <view class="product-operation">
+          <button size="mini" style="margin-left: 10rpx;" bindtap="edit" data-id="{{item.id}}">编辑</button>
+          <button size="mini" style="margin-left: 10rpx;" bindtap="shareProduct" data-id="{{item.id}}" type="primary" wx:if="{{item.status == 1}}">分享</button>
+          <button size="mini" style="margin-left: 10rpx;" bindtap="sale" data-id="{{item.id}}" type="warn" wx:if="{{item.status == 2}}">上线</button> 
+      </view>
+    </view>
+  </block>
 </view>

@@ -1,4 +1,4 @@
-// add.js
+// pages/product/edit.js
 const app = getApp()
 
 Page({
@@ -6,9 +6,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: 0,
     tempImgFiles: [],
     tempVedioFile: null,
-    chooseImgFlag: false
+    chooseImgFlag: false,
+    productInfo: {}
   },
 
   formSubmit: function (e) {
@@ -33,24 +35,26 @@ Page({
         mask: true,
         icon: 'none'
       });
-      return ;
+      return;
     }
 
     wx.request({
-      url: app.globalData.serverHost + '/product/add',
+      url: app.globalData.serverHost + '/product/edit',
       data: {
-        'uid': app.globalData.userData.uid,
-        'img_list': that.data.tempImgFiles,
-        'vedio': that.data.tempVedioFile,
-        'name': e.detail.value.name,
-        'price': e.detail.value.price,
-        'salary': e.detail.value.salary,
-        'desc': e.detail.value.desc,
-        'express': e.detail.value.express
+        id: that.data.id,
+        uid: app.globalData.userData.uid,
+        img_list: that.data.tempImgFiles,
+        vedio: that.data.tempVedioFile,
+        name: e.detail.value.name,
+        price: e.detail.value.price,
+        salary: e.detail.value.salary,
+        desc: e.detail.value.desc,
+        express: e.detail.value.express
       },
       method: 'POST',
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'TOKEN': app.globalData.userData.session
       },
       success: function (res) {
         console.log(res.data);
@@ -60,9 +64,9 @@ Page({
             content: '添加成功，继续添加商品',
             success: function (res) {
               if (res.confirm) {
-                
+
               } else if (res.cancel) {
-                wx.switchTab({
+                wx.reLaunch({
                   url: '../index/index',
                 });
               }
@@ -77,24 +81,17 @@ Page({
         }
       }
     });
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
+    // console.log('form发生了submit事件，携带数据为：', e.detail.value)
   },
 
-  chooseImage: function() {
+  chooseImage: function () {
     var that = this
     var severImgFiles = [];
-
-    // 显示重选图片
-    if (!this.data.chooseImgFlag) {
-      this.setData({
-        chooseImgFlag: true
-      });
-    }
 
     wx.chooseImage({
       count: 9,
       sizeType: ['compressed'],
-      success: function(res) {
+      success: function (res) {
         // TODO
         wx.showLoading({
           title: '上传图片中',
@@ -102,9 +99,12 @@ Page({
 
         for (var i = 0; i < res.tempFilePaths.length; i++) {
           wx.uploadFile({
-            url: app.globalData.serverHost + '/open/upload/' + app.globalData.userData.uid,
+            url: app.globalData.serverHost + '/user/upload/' + app.globalData.userData.uid,
             filePath: res.tempFilePaths[i],
             name: 'img_' + i,
+            header: {
+              'TOKEN': app.globalData.userData.session
+            },
             success: function (res) {
               wx.hideLoading();
 
@@ -117,6 +117,13 @@ Page({
                 });
               }
             }
+          });
+        }
+
+        // 显示重选图片
+        if (!that.data.chooseImgFlag) {
+          that.setData({
+            chooseImgFlag: true
           });
         }
       },
@@ -137,9 +144,12 @@ Page({
         });
 
         wx.uploadFile({
-          url: app.globalData.serverHost + '/open/upload/' + app.globalData.userData.uid,
+          url: app.globalData.serverHost + '/user/upload/' + app.globalData.userData.uid,
           filePath: res.tempFilePath,
           name: 'vedio',
+          header: {
+            'TOKEN': app.globalData.userData.session
+          },
           success: function (res) {
             wx.hideLoading();
 
@@ -153,7 +163,7 @@ Page({
           }
         });
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(res);
       }
     })
@@ -163,9 +173,35 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarTitle({
-      title: '发布商品'
-    });
+    console.log(options);
+    if (options.id) {
+      var that = this;
+      wx.request({
+        url: app.globalData.serverHost + '/product/info/' + options.id,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json',
+          'TOKEN': app.globalData.userData.session
+        },
+        success: function (res) {
+          // console.log(res.data);
+          that.setData({
+            tempImgFiles: JSON.parse(res.data.data.img_list),
+            chooseImgFlag: true,
+            tempVedioFile: res.data.data.vedio,
+            productInfo: res.data.data,
+            id: options.id
+          });
+        }
+      });
+      wx.setNavigationBarTitle({
+        title: '编辑商品'
+      });
+    } else {
+      wx.setNavigationBarTitle({
+        title: '创建商品'
+      });
+    }
   },
 
   /**

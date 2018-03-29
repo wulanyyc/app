@@ -2,8 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/product/order",
-    "pages/product/add",
+    "pages/product/edit",
+    "pages/order/index",
     "pages/report/report",
     "pages/config/config",
     "pages/open/open",
@@ -23,16 +23,12 @@
         "text": "店铺"
       },
       {
-        "pagePath": "pages/product/order",
+        "pagePath": "pages/order/index",
         "text": "订单"
       },
       {
-        "pagePath": "pages/product/add",
-        "text": "发布商品"
-      },
-      {
         "pagePath": "pages/report/report",
-        "text": "报表"
+        "text": "报告"
       },
       {
         "pagePath": "pages/config/config",

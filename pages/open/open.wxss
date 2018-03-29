@@ -5,7 +5,7 @@
 
 .container {
   padding: 50rpx 0;
-} 
+}
 
 .userinfo {
   display: flex;

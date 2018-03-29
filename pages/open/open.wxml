@@ -12,7 +12,7 @@
   <form bindsubmit="formSubmit" class="form">
     <view class="section">
         <view class="section-title"><text class="red-text">*</text>店铺名称:</view>
-        <input name="name" value="{{userInfo.nickName}}" maxlength="45" focus="true" />
+        <input name="name" value="{{userInfo.nickName}}" maxlength="10" focus="true" />
     </view>
 
     <view class="section">

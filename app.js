@@ -9,32 +9,36 @@ App({
 
     // 登录
     wx.login({
-        success: res => {
-          // console.log(res);
-          var code = res.code;
-          if (code) {
-            wx.request({
-              url: this.globalData.serverHost + '/open/session',
-              data: {
-                'code': code
-              },
-              method: 'GET',
-              header: {
-                'content-type': 'application/json'
-              },
-              success: function (res) {
-                app.globalData.userData = res.data.data;
-                if (!app.globalData.userData.uid) {
-                  wx.redirectTo({
-                    url: '/pages/open/open',
-                  });
-                }
+      success: res => {
+        var code = res.code;
+        if (code) {
+          wx.request({
+            url: this.globalData.serverHost + '/open/session',
+            data: {
+              'code': code
+            },
+            method: 'GET',
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              app.globalData.userData = res.data.data;
+              if (!app.globalData.userData.uid) {
+                wx.redirectTo({
+                  url: '/pages/open/open',
+                });
+              } else {
+                // wx.setStorageSync("uid", app.globalData.userData.uid);
+                wx.redirectTo({
+                  url: '/pages/index/index',
+                });
               }
-            });
-          }
-          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+            }
+          });
         }
-      }),
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      }
+    }),
 
     // 获取用户信息
     wx.getSetting({

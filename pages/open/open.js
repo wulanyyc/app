@@ -25,9 +25,12 @@ Page({
 
         for (var i = 0; i < res.tempFilePaths.length; i++) {
           wx.uploadFile({
-            url: app.globalData.serverHost + '/open/upload/logo',
+            url: app.globalData.serverHost + '/user/upload/logo',
             filePath: res.tempFilePaths[i],
             name: 'img_' + i,
+            header: {
+              'TOKEN': app.globalData.userData.session
+            },
             success: function (res) {
               wx.hideLoading();
               var data = res.data;
@@ -58,7 +61,7 @@ Page({
     } else {
       var page = this;
       wx.request({
-        url: app.globalData.serverHost + '/open/phone',
+        url: app.globalData.serverHost + '/user/phone',
         data: {
           'session': app.globalData.userData.session,
           'iv': e.detail.iv,
@@ -66,7 +69,8 @@ Page({
         },
         method: 'POST',
         header: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'TOKEN': app.globalData.userData.session
         },
         success: function (res) {
           // console.log(res.data);
@@ -99,17 +103,19 @@ Page({
         },
         method: 'POST',
         header: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'TOKEN': app.globalData.userData.session
         },
         success: function (res) {
           if (res.data.data > 0) {
+            wx.setStorageSync("uid", res.data.data);
             wx.switchTab({
               url: '../index/index'
             });
           } else {
             wx.showModal({
               title: '开通失败',
-              content: '该昵称已存在，请修改',
+              content: '该店名已存在，请修改',
               success: function (res) {
                 if (res.confirm) {
                   console.log('用户点击确定')

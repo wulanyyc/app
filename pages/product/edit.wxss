@@ -1,6 +1,11 @@
-/* add.wxss */
+/* pages/product/edit.wxss */
 page {
   background-color: #f5f5f5;
+}
+
+.section {
+  width: 90%;
+  border-radius: 15rpx;
 }
 
 .interval {
